@@ -1,16 +1,19 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { Component } from "react";
+
+export class App extends Component { 
+
+
+
+
+  render() {
+    // const { contacts, filter } = this.state;
+    // const visibleContact = contacts.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+
+    return (
+      <>
+
+      
+      </>
+    )
+  }
+}
