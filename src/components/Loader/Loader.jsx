@@ -19,5 +19,5 @@ export const Loader = ({isLoader}) => {
 }
 
 Loader.propTypes = {
-    isLoader: PropTypes.func,
+    isLoader: PropTypes.bool,
 }
