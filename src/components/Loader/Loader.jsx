@@ -1,5 +1,6 @@
 import { ColorRing } from 'react-loader-spinner'
 import css from './Loader.module.css'
+import PropTypes from 'prop-types';
 
 export const Loader = ({isLoader}) => {
     return (
@@ -15,4 +16,8 @@ export const Loader = ({isLoader}) => {
         </div>
         
     )
+}
+
+Loader.propTypes = {
+    isLoader: PropTypes.func,
 }

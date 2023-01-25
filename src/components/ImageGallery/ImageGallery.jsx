@@ -22,4 +22,5 @@ export class ImageGallery extends Component{
 
 ImageGallery.propTypes = {
     query: PropTypes.array,
+    openModal: PropTypes.func,
 }
