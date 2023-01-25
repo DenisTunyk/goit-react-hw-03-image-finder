@@ -1,19 +1,72 @@
 import { Component } from "react";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
+import { Searchbar } from "./Searchbar/Searchbar";
+import { Button } from "./Button/Button"
+import { Loader } from "./Loader/Loader"
+import {Modal} from "./Modal/Modal"
+import {fetchPictureQuery} from "../api/api.js"
 
 export class App extends Component { 
 
+    state = {
+        page: 1,
+        query: "",
+        items: [],
+        isLoader: false,
+        showModal: false,
+        imgLarge: ""
+    }
 
+    toogleModal = (imgLarge = "") => {
+        this.setState(state => ({
+            showModal: !state.showModal,
+            imgLarge,
+        }))
+    }
 
-
-  render() {
-    // const { contacts, filter } = this.state;
-    // const visibleContact = contacts.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
-
-    return (
-      <>
+    getQuery = (query) => {
+        if (query !== this.state.query) {
+            this.setState({
+                page: 1,
+                query: query,
+                items: []
+            })
+        }
         
-      
-      </>
+    }
+
+    loadMore = () => {
+        this.setState(prevState => ({
+            page: prevState.page += 1
+        }))
+    }
+
+    async componentDidUpdate(_, prevState) {
+        if ((prevState.page !== this.state.page) || (prevState.query !== this.state.query)) {
+            this.setState({isLoader: true})
+            try {
+                const data = await fetchPictureQuery(this.state.query, this.state.page)
+                this.setState(prevState => ({
+                    items: [...prevState.items, ...data.hits],
+                    isLoader: false
+                }))
+                
+            } catch (error){
+                console.log(error);
+                this.setState({isLoader: false})
+            }
+        }
+    }
+
+    render() {
+    return (
+        <div>
+            <Searchbar onSubmit={this.getQuery} />
+            <ImageGallery query={this.state.items} openModal={ this.toogleModal } />
+            {!(this.state.items.length === 0) && <Button onClick={this.loadMore} />}
+            <Loader isLoader={this.state.isLoader} />
+            {this.state.showModal && <Modal onClose={this.toogleModal} img={this.state.imgLarge}>{ this.props.children }</Modal> }
+        </div>
     )
   }
 }
