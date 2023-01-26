@@ -37,7 +37,7 @@ export class App extends Component {
 
     loadMore = () => {
         this.setState(prevState => ({
-            page: prevState.page += 1
+            page: prevState.page + 1
         }))
     }
 
@@ -49,7 +49,6 @@ export class App extends Component {
                 this.setState(prevState => ({
                     items: [...prevState.items, ...data.hits],
                 }))
-                console.log(data)
                 if (this.state.page < Math.ceil(data.totalHits / 12)) {
                     this.setState({showButton: true})
                 } else {
