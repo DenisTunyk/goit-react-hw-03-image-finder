@@ -67,7 +67,7 @@ export class App extends Component {
         <div>
             <Searchbar onSubmit={this.getQuery} />
             <ImageGallery query={this.state.items} openModal={ this.toogleModal } />
-            {!(this.state.items.length === 0) && this.state.showButton && <Button onClick={this.loadMore} />}
+            {!(this.state.items.length === 0) && this.state.showButton && !(this.state.isLoader) && <Button onClick={this.loadMore} />}
             <Loader isLoader={this.state.isLoader} />
             {this.state.showModal && <Modal onClose={this.toogleModal} img={this.state.imgLarge}>{ this.props.children }</Modal> }
         </div>
