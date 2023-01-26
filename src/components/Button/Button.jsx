@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export const Button = ({onClick}) => {
     return (
-        <button className={css.Button} disabled={false} style={{display: "block"}} type="button" onClick={onClick}>Add contact</button>
+        <button className={css.Button} disabled={false} style={{display: "block"}} type="button" onClick={onClick}>Load more</button>
     )
 }
 
