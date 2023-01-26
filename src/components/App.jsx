@@ -14,7 +14,8 @@ export class App extends Component {
         items: [],
         isLoader: false,
         showModal: false,
-        imgLarge: ""
+        imgLarge: "",
+        showButton: false
     }
 
     toogleModal = (imgLarge = "") => {
@@ -32,7 +33,6 @@ export class App extends Component {
                 items: []
             })
         }
-        
     }
 
     loadMore = () => {
@@ -48,11 +48,16 @@ export class App extends Component {
                 const data = await fetchPictureQuery(this.state.query, this.state.page)
                 this.setState(prevState => ({
                     items: [...prevState.items, ...data.hits],
-                    isLoader: false
                 }))
-                
+                console.log(data)
+                if (this.state.page < Math.ceil(data.totalHits / 12)) {
+                    this.setState({showButton: true})
+                } else {
+                    this.setState({ showButton: false })
+                }
             } catch (error){
-                console.log(error);
+                console.log(error); 
+            } finally {
                 this.setState({isLoader: false})
             }
         }
@@ -63,7 +68,7 @@ export class App extends Component {
         <div>
             <Searchbar onSubmit={this.getQuery} />
             <ImageGallery query={this.state.items} openModal={ this.toogleModal } />
-            {!(this.state.items.length === 0) && <Button onClick={this.loadMore} />}
+            {!(this.state.items.length === 0) && this.state.showButton && <Button onClick={this.loadMore} />}
             <Loader isLoader={this.state.isLoader} />
             {this.state.showModal && <Modal onClose={this.toogleModal} img={this.state.imgLarge}>{ this.props.children }</Modal> }
         </div>
